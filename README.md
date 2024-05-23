@@ -1,7 +1,14 @@
 # web_app_GroupG
 ###### 請大家將前/後端程式以下述方式命名再上傳
+
+### How to run
+1. make sure to download all the libraries which are used in the code
+2. is the web_app_GroupG folder, run "node app.js"
+3. if you see the message in the terminal "Server is running on port 3000\nMongoDB connected"
+4. open "http://localhost:3000"
+
 > * 前端：`login_front.js`
-> * 後端：`login_back.js`
+> * 後端：`app.js`
 > * js 檔名整理
 >   * login
 >   * signup
