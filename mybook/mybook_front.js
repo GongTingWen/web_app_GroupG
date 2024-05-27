@@ -15,42 +15,54 @@ function menu1 () {
 				  ["book328253", "向左走、向右走", "圖/文：陳薇安", "book328253.jpg", "bookmark-off.png"],
 				  ["book318653", "不要碰我的小花", "圖/文：Abey", "book318653.jpg", "bookmark-off.png"]]];//mybookFunc();
 	content = books;
-	var userName = "史迪奇";//getName();
-	var photo = "book328553.png";//getPhoto();
-	user.innerHTML = "<div id='profile'><div></div></div><div id='profileName'></div><button id='signoutBtn'>登出<span></span><span></span><span></span><span></span></button>";
-	var profile = document.getElementById("profile").getElementsByTagName("div")[0];
-	var profileName = document.getElementById("profileName");
-	profile.style.backgroundImage = "url('"+ photo + "')";
-	profileName.innerHTML = userName;
-	var section_name = ["繼續完成", "已加書籤"];
-	var main = document.getElementById("main");
-	main.innerHTML = "";
-	for (var i=0; i<2; i++) {
-		if (content[i].length != 0) {
-			main.innerHTML +=   "<div class='section'>" +
-									"<div class='section-name'>" + section_name[i] + "</div>" +
-									"<div class='bookshelf'>" +
-									"</div>" +
-								"</div>";
-			var bookshelf = document.getElementsByClassName("bookshelf")[i];
-			for (var j=0; j<content[i].length; j++) {
-				bookshelf.innerHTML +=  "<div id='" + i.toString() + content[i][j][0] + "' class='book'>" +
-											"<div class='cover'></div>" +
-											"<div id='" + i.toString() + j.toString() + "' class='mask'>" +
-												"<div class='bookmark'></div>" +
-												"<div class='preview'></div>" +
-												"<div class='edit'></div>" + 
-											"</div>" +
-											"<div class='book-name'>" + content[i][j][1] + "</div>" +
-											"<div class='author-name'>" + content[i][j][2] + "</div>" +
-										"</div>";
-				var cover = document.getElementById(i.toString() + content[i][j][0]).getElementsByClassName("cover")[0];
-				var bookmark = document.getElementById(i.toString() + content[i][j][0]).getElementsByClassName("bookmark")[0];
-				cover.style.backgroundImage = "url(" + content[i][j][3] + ")";
-				bookmark.style.backgroundImage = "url(" + content[i][j][4] + ")";
+	fetch('/homepage', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	})
+	.then(response => response.json())
+	.then(data => {
+		var userName = data.username; // Retrieve the username from the response
+		// console.log(userName); // Log or use the username as needed
+		// var userName = "史迪奇";//getName();
+		var photo = "book328553.png";//getPhoto();
+		user.innerHTML = "<div id='profile'><div></div></div><div id='profileName'></div><button id='signoutBtn'>登出<span></span><span></span><span></span><span></span></button>";
+		var profile = document.getElementById("profile").getElementsByTagName("div")[0];
+		var profileName = document.getElementById("profileName");
+		profile.style.backgroundImage = "url('"+ photo + "')";
+		profileName.innerHTML = userName;
+		var section_name = ["繼續完成", "已加書籤"];
+		var main = document.getElementById("main");
+		main.innerHTML = "";
+		for (var i=0; i<2; i++) {
+			if (content[i].length != 0) {
+				main.innerHTML +=   "<div class='section'>" +
+										"<div class='section-name'>" + section_name[i] + "</div>" +
+										"<div class='bookshelf'>" +
+										"</div>" +
+									"</div>";
+				var bookshelf = document.getElementsByClassName("bookshelf")[i];
+				for (var j=0; j<content[i].length; j++) {
+					bookshelf.innerHTML +=  "<div id='" + i.toString() + content[i][j][0] + "' class='book'>" +
+												"<div class='cover'></div>" +
+												"<div id='" + i.toString() + j.toString() + "' class='mask'>" +
+													"<div class='bookmark'></div>" +
+													"<div class='preview'></div>" +
+													"<div class='edit'></div>" + 
+												"</div>" +
+												"<div class='book-name'>" + content[i][j][1] + "</div>" +
+												"<div class='author-name'>" + content[i][j][2] + "</div>" +
+											"</div>";
+					var cover = document.getElementById(i.toString() + content[i][j][0]).getElementsByClassName("cover")[0];
+					var bookmark = document.getElementById(i.toString() + content[i][j][0]).getElementsByClassName("bookmark")[0];
+					cover.style.backgroundImage = "url(" + content[i][j][3] + ")";
+					bookmark.style.backgroundImage = "url(" + content[i][j][4] + ")";
+				}
 			}
 		}
-	}
+	})
+	.catch(error => console.error('Error:', error));
 	main.innerHTML += "<div class='section'><div class='section-last'>© Meraki</div></div>";
 }
 
@@ -100,7 +112,7 @@ $(".bookmark").click(function (){
 
 $("#signoutBtn").click(function (){
 	//signout();
-	window.location.href = "../homepage/homepage.html";
+	window.location.href = "../login/login.html";
 });
 
 $("#theme").mouseenter(function (){

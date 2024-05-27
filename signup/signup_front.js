@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 username.value = "";
                 email.value = "";
                 pword.value = "";
-                window.location.href = "../homepage/homepage.html";
+                window.location.href = "../login/login.html";
             } else {
                 if (data.error === "Email already registered") {
                     emailColor = "#AE0000";

@@ -21,13 +21,25 @@ function menu1 () {
 	if (isLogin == 0) {
 		user.innerHTML = "<button id='signupBtn'>註冊<span></span><span></span><span></span><span></span></button><button id='loginBtn'>登入<span></span><span></span><span></span><span></span></button>";
 	} else if (isLogin == 1) {
-		var userName = "史迪奇";//getName();
-		var photo = "book328553.png";//getPhoto();
-		user.innerHTML = "<div id='profile'><div></div></div><div id='profileName'></div><button id='signoutBtn'>登出<span></span><span></span><span></span><span></span></button>";
-		var profile = document.getElementById("profile").getElementsByTagName("div")[0];
-		var profileName = document.getElementById("profileName");
-		profile.style.backgroundImage = "url('"+ photo + "')";
-		profileName.innerHTML = userName;
+		fetch('/homepage', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+		.then(response => response.json())
+		.then(data => {
+			var userName = data.username; // Retrieve the username from the response
+			// console.log(userName); // Log or use the username as needed
+			// var userName = "史迪奇";//getName();
+			var photo = "book328553.png";//getPhoto();
+			user.innerHTML = "<div id='profile'><div></div></div><div id='profileName'></div><button id='signoutBtn'>登出<span></span><span></span><span></span><span></span></button>";
+			var profile = document.getElementById("profile").getElementsByTagName("div")[0];
+			var profileName = document.getElementById("profileName");
+			profile.style.backgroundImage = "url('"+ photo + "')";
+			profileName.innerHTML = userName;
+		})
+		.catch(error => console.error('Error:', error));	
 	}
 	var section_name = ["本月精選", "為您推薦", "繼續完成"];
 	var main = document.getElementById("main");
@@ -119,7 +131,7 @@ $("#loginBtn").click(function (){
 
 $("#signoutBtn").click(function (){
 	//signout();
-	window.location.href = "../homepage/homepage.html";
+	window.location.href = "../login/login.html";
 });
 
 $("#theme").mouseenter(function (){

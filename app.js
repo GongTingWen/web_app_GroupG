@@ -33,7 +33,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.get('/', (req, res) => {
-    res.redirect('../login/login.html');
+    res.redirect('../login/login.html'); // set default to login page 
 });
 
 // Signup route
@@ -85,8 +85,12 @@ app.post('/login', async (req, res) => {
 		if (user) {
             //check if password matches
             const result = req.body.password === user.password;
-            if (result) {
+            if (result) { // Login successful
+                // Retrieve username from the database
+                const username = user.username;
                 // Login successful
+                req.session.user = { username };
+
                 return res.json({ success: true });
             } else {
                 res.status(400).json({ error: "Password doesn't match" });
@@ -98,6 +102,40 @@ app.post('/login', async (req, res) => {
         console.error(error);
         return res.status(500).json({ error: "Internal Server Error" });
     }
+});
+
+// homepage
+app.post('/homepage', async (req, res) => {
+    // Check if the user is authenticated by verifying the session
+    if (!req.session.user) {
+        return res.status(400).json({ error: "Missing credentials" });
+    }
+
+    const username = req.session.user.username;
+    return res.json({ username }); // Return the username in the response
+});
+
+
+// forget password 
+app.post('/forgetpassword', async (req, res) => {
+    // Check if the user is authenticated by verifying the session
+    if (!req.session.user) {
+        return res.status(400).json({ error: "Missing credentials" });
+    }
+
+    const username = req.session.user.username;
+    return res.json({ username }); // Return the username in the response
+});
+
+// mybook
+app.post('/mybook', async (req, res) => {
+    // Check if the user is authenticated by verifying the session
+    if (!req.session.user) {
+        return res.status(400).json({ error: "Missing credentials" });
+    }
+
+    const username = req.session.user.username;
+    return res.json({ username }); // Return the username in the response
 });
 
 app.listen(3000, () => {
