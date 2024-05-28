@@ -137,7 +137,30 @@ app.post('/mybook', async (req, res) => {
     const username = req.session.user.username;
     return res.json({ username }); // Return the username in the response
 });
+/*
+// Logout route
+app.post('/logout', (req, res) => {
+    req.logout(err => {
+        if (err) {
+            return res.status(500).json({ error: "Internal Server Error" });
+        }
+        req.session.destroy(err => {
+            if (err) {
+                return res.status(500).json({ error: "Internal Server Error" });
+            }
+            res.json({ success: true });
+        });
+    });
+});
 
+// Middleware to check if user is authenticated
+function isAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.status(401).json({ error: "Unauthorized" });
+}
+*/
 app.listen(3000, () => {
     console.log("Server is running on port 3000");
 });

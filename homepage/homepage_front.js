@@ -33,7 +33,7 @@ function menu1 () {
 			// console.log(userName); // Log or use the username as needed
 			// var userName = "史迪奇";//getName();
 			var photo = "book328553.png";//getPhoto();
-			user.innerHTML = "<div id='profile'><div></div></div><div id='profileName'></div><button id='signoutBtn'>登出<span></span><span></span><span></span><span></span></button>";
+			
 			var profile = document.getElementById("profile").getElementsByTagName("div")[0];
 			var profileName = document.getElementById("profileName");
 			profile.style.backgroundImage = "url('"+ photo + "')";
@@ -41,6 +41,7 @@ function menu1 () {
 		})
 		.catch(error => console.error('Error:', error));	
 	}
+	user.innerHTML = "<div id='profile'><div></div></div><div id='profileName'></div><button id='signoutBtn'>登出<span></span><span></span><span></span><span></span></button>";
 	var section_name = ["本月精選", "為您推薦", "繼續完成"];
 	var main = document.getElementById("main");
 	main.innerHTML = "";
@@ -86,7 +87,22 @@ $(".bookmark").mouseleave(function (){
 		$(this).css("background-image", "url('bookmark-off.png')");
 	}
 });
-
+function changeMark(bookID, bookmarkStatus) {
+    $.ajax({
+        url: "/update-bookmark",
+        method: "POST",
+        data: {
+            bookID: bookID,
+            bookmarkStatus: bookmarkStatus
+        },
+        success: function(response) {
+            console.log("Bookmark status updated successfully");
+        },
+        error: function(xhr, status, error) {
+            console.error("Error updating bookmark status:", error);
+        }
+    });
+}
 $(".bookmark").click(function (){
 	if (isLogin == 0) {
 		window.location.href = "../login/login.html";
@@ -96,7 +112,7 @@ $(".bookmark").click(function (){
 		if (content[markIDR][markIDL][4] == "bookmark-on.png") {
 			$(this).css("background-image", "url('bookmark-off.png')");
 			content[markIDR][markIDL][4] = "bookmark-off.png";
-			//changeMark(content[markIDR][markIDL][0], content[markIDR][markIDL][4]);
+			changeMark(content[markIDR][markIDL][0], content[markIDR][markIDL][4]);
 			for (var i=0; i<3; i++) {
 				for (var j=0; j<content[i].length; j++) {
 					if (content[i][j][0] == content[markIDR][markIDL][0]) {
@@ -108,7 +124,7 @@ $(".bookmark").click(function (){
 		} else {
 			$(this).css("background-image", "url('bookmark-on.png')");
 			content[markIDR][markIDL][4] = "bookmark-on.png";
-			//changeMark(content[markIDR][markIDL][0], content[markIDR][markIDL][4]);
+			changeMark(content[markIDR][markIDL][0], content[markIDR][markIDL][4]);
 			for (var i=0; i<3; i++) {
 				for (var j=0; j<content[i].length; j++) {
 					if (content[i][j][0] == content[markIDR][markIDL][0]) {
@@ -129,8 +145,7 @@ $("#loginBtn").click(function (){
 	window.location.href = "../login/login.html";
 });
 
-$("#signoutBtn").click(function (){
-	//signout();
+$("#signoutBtn").click(function() {
 	window.location.href = "../login/login.html";
 });
 
@@ -223,11 +238,11 @@ $("#theme").mouseenter(function (){
 				if (searchBook[markIDN][4] == "bookmark-on.png") {
 					$(this).css("background-image", "url('bookmark-off.png')");
 					searchBook[markIDN][4] = "bookmark-off.png";
-					//changeMark(searchBook[markIDN][0], searchBook[markIDN][4]);
+					changeMark(searchBook[markIDN][0], searchBook[markIDN][4]);
 				} else {
 					$(this).css("background-image", "url('bookmark-on.png')");
 					searchBook[markIDN][4] = "bookmark-on.png";
-					//changeMark(searchBook[markIDN][0], searchBook[markIDN][4]);
+					changeMark(searchBook[markIDN][0], searchBook[markIDN][4]);
 				}
 			}
 		});
@@ -337,11 +352,11 @@ $("#author").mouseenter(function (){
 				if (searchBook[markIDN][4] == "bookmark-on.png") {
 					$(this).css("background-image", "url('bookmark-off.png')");
 					searchBook[markIDN][4] = "bookmark-off.png";
-					//changeMark(searchBook[markIDN][0], searchBook[markIDN][4]);
+					changeMark(searchBook[markIDN][0], searchBook[markIDN][4]);
 				} else {
 					$(this).css("background-image", "url('bookmark-on.png')");
 					searchBook[markIDN][4] = "bookmark-on.png";
-					//changeMark(searchBook[markIDN][0], searchBook[markIDN][4]);
+					changeMark(searchBook[markIDN][0], searchBook[markIDN][4]);
 				}
 			}
 		});
@@ -491,11 +506,11 @@ $("#reward").click(function () {
 			if (rewardBook[markIDN][4] == "bookmark-on.png") {
 				$(this).css("background-image", "url('bookmark-off.png')");
 				rewardBook[markIDN][4] = "bookmark-off.png";
-				//changeMark(rewardBook[markIDN][0], rewardBook[markIDN][4]);
+				changeMark(rewardBook[markIDN][0], rewardBook[markIDN][4]);
 			} else {
 				$(this).css("background-image", "url('bookmark-on.png')");
 				rewardBook[markIDN][4] = "bookmark-on.png";
-				//changeMark(rewardBook[markIDN][0], rewardBook[markIDN][4]);
+				changeMark(rewardBook[markIDN][0], rewardBook[markIDN][4]);
 			}
 		}
 	});
@@ -515,15 +530,34 @@ $("#reward").click(function () {
 		$("#reward-screen-container").remove();
 	});
 });
-
+function searchBookFunc(key_word) {
+    // Array of books
+    var books = [
+		["book328553", "再勇敢一點", "圖/文：黃鈞荻", "book328553.png", "bookmark-on.png"], 
+		["book328653", "不要說話", "圖/文：龔郁婷", "book328653.jpg", "bookmark-off.png"],
+		["book328353", "我的阿富汗筆友", "圖/文：龔郁雯", "book328353.jpg", "bookmark-off.png"],
+		["book328253", "向左走、向右走", "圖/文：陳薇安", "book328253.jpg", "bookmark-off.png"],
+		["book318653", "不要碰我的小花", "圖/文：Abey", "book318653.jpg", "bookmark-off.png"],
+	]
+    
+    // Filter books based on keyword
+    var searchResults = books.filter(function(book) {
+        return book.some(function(item) {
+            return item.includes(key_word);
+        });
+    });
+    
+    return searchResults;
+}
 $("#search input").keypress(function (event) {
 	if (event.key === "Enter") {
 		var key_word = $("#search input").val().trim();
 		if (key_word != "") {
-			var searchBook = [["book328553", "再勇敢一點", "圖/文：黃鈞荻", "book328553.png", "bookmark-on.png"], 
-							 ["book328653", "不要說話", "圖/文：龔郁婷", "book328653.jpg", "bookmark-off.png"],
-							 ["book328353", "我的阿富汗筆友", "圖/文：龔郁雯", "book328353.jpg", "bookmark-off.png"],
-							 ["book328354", "我的阿富汗筆友", "圖/文：龔郁雯", "book328353.jpg", "bookmark-off.png"]];//searchBookFunc(key_word);
+			var searchBook = searchBookFunc(key_word);
+			//[["book328553", "再勇敢一點", "圖/文：黃鈞荻", "book328553.png", "bookmark-on.png"], 
+							 //["book328653", "不要說話", "圖/文：龔郁婷", "book328653.jpg", "bookmark-off.png"],
+							 //["book328353", "我的阿富汗筆友", "圖/文：龔郁雯", "book328353.jpg", "bookmark-off.png"],
+							 //["book328354", "我的阿富汗筆友", "圖/文：龔郁雯", "book328353.jpg", "bookmark-off.png"]];
 			var main = document.getElementById("main");
 			main.innerHTML = "";
 			if (searchBook.length != 0) {
