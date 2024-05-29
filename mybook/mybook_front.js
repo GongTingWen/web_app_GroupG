@@ -458,6 +458,22 @@ $("#reward").click(function () {
 		$("#reward-screen-container").remove();
 	});
 });
+function changeMark(bookID, bookmarkStatus) {
+    $.ajax({
+        url: "/update-bookmark",
+        method: "POST",
+        data: {
+            bookID: bookID,
+            bookmarkStatus: bookmarkStatus
+        },
+        success: function(response) {
+            console.log("Bookmark status updated successfully");
+        },
+        error: function(xhr, status, error) {
+            console.error("Error updating bookmark status:", error);
+        }
+    });
+}
 function searchBookFunc(key_word) {
     // Array of books
     var books = [

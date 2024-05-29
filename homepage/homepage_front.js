@@ -644,11 +644,11 @@ $("#search input").keypress(function (event) {
 					if (searchBook[markIDN][4] == "bookmark-on.png") {
 						$(this).css("background-image", "url('bookmark-off.png')");
 						searchBook[markIDN][4] = "bookmark-off.png";
-						//changeMark(searchBook[markIDN][0], searchBook[markIDN][4]);
+						changeMark(searchBook[markIDN][0], searchBook[markIDN][4]);
 					} else {
 						$(this).css("background-image", "url('bookmark-on.png')");
 						searchBook[markIDN][4] = "bookmark-on.png";
-						//changeMark(searchBook[markIDN][0], searchBook[markIDN][4]);
+						changeMark(searchBook[markIDN][0], searchBook[markIDN][4]);
 					}
 				}
 			});
