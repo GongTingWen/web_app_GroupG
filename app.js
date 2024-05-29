@@ -118,13 +118,60 @@ app.post('/homepage', async (req, res) => {
 
 // forget password 
 app.post('/forgetpassword', async (req, res) => {
-    // Check if the user is authenticated by verifying the session
-    if (!req.session.user) {
-        return res.status(400).json({ error: "Missing credentials" });
-    }
+    try {
+        const { email } = req.body;
 
-    const username = req.session.user.username;
-    return res.json({ username }); // Return the username in the response
+        if (!email) {
+            return res.status(400).json({ error: "Missing credentials" });
+        }
+        
+        const user = await User.findOne({ email: req.body.email });
+		if (user) {
+            const username = user.username; 
+            req.session.user = { username };
+            return res.json({ success: true, username: username }); 
+		} else {
+		    res.status(400).json({ error: "User doesn't exist" });
+		}
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+app.post('/update', async (req, res) => {
+    try {
+        const { password } = req.body;
+        
+        // Check if all fields are provided
+        if ( !password ) {
+            return res.status(400).json({ error: "Missing credentials"});
+        }
+
+        // Find the user by username
+        if (!req.session.user) {
+            return res.status(400).json({ error: "user not undefined" });
+        }
+    
+        const username = req.session.user.username;
+        // console.log(Username);
+
+        // Find the user by username 
+        const user = await User.findOne({ username });
+
+        if (!user) {
+            return res.status(400).json({ error: "User doesn't exist" });
+        }
+
+        // Update the user's password
+        user.password = password;
+        await user.save();
+
+        return res.json({ success: true });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
 });
 
 // mybook
