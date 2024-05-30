@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", function() {
             if (data.success) {
                 email.value = "";
                 pword.value = "";
+                window.localStorage.setItem("userdata", account.value.trim());
                 window.location.href = "../homepage/homepage.html";
             } else {
                 if (data.error === "User doesn't exist") {
