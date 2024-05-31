@@ -765,7 +765,6 @@ $("#menu2").click(function () {
 		$(".sedit").click(function () {
 			var markIDR = parseInt($(this).parent().attr("id").substr(0, 1));
 			var markIDL = parseInt($(this).parent().attr("id").substr(1, ($(this).parent().attr("id").length - 1)));
-			var preview_pic = ["../bookpage/000015-page0.png"];//getPreviewFunc(searchBook[markIDN][0]);
 			if (isLogin == 1) {
 				window.localStorage.setItem("bookdata", searchBook[markIDR][markIDL][0]);
 				window.location.href = "../edit/edit.html";
