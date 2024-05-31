@@ -2,6 +2,8 @@
 var userdata = window.localStorage.getItem("userdata");
 var book_id = window.localStorage.getItem("bookdata");
 
+//ifCreateCondition(userdata, book_id);
+
 var page = 0;
 var totalPage = 2; //totalPageFunc(book_id);
 
