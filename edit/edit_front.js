@@ -1,8 +1,9 @@
 
-var page = 0;
-var totalPage = 2; //totalPageFunc();
-
 var userdata = window.localStorage.getItem("userdata");
+var book_id = window.localStorage.getItem("bookdata");
+
+var page = 0;
+var totalPage = 2; //totalPageFunc(book_id);
 
 var sendorNot = 0;
 
@@ -13,7 +14,6 @@ const uploadManager = new Bytescale.UploadManager({
 });
 
 var book_name = document.getElementById("book-name");
-var book_id = window.localStorage.getItem("bookdata");
 var book_nameText = "絲念"; //getBookNameFunc(book_id);
 book_name.innerHTML = book_nameText;
 $("title").html($("title").html() + book_nameText);
