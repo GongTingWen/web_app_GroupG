@@ -113,6 +113,7 @@ function update() {
             emailText.value = "";
             codeText.value = "";
             newPasswordInput.value = "";
+            window.localStorage.setItem("userdata", user);
             window.location.href = "../homepage/homepage.html";
         } else {
             if (data.error === "Missing credentials") {
