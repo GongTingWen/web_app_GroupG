@@ -34,12 +34,12 @@ document.addEventListener("DOMContentLoaded", function() {
             } else {
                 if (data.error === "Email already registered") {
                     emailColor = "#AE0000";
-                    warningText += "Email already registered"; // "This email is already registered"
+                    warningText += "電子郵件已註冊"; // "This email is already registered"
                 } else if (data.error === "Username already registered") {
                     emailColor = "#AE0000";
-                    warningText += "Username already registered"; // "This email is already registered"
+                    warningText += "他人已使用此名稱"; // "This email is already registered"
                 } else if (data.error === "All fields are required") {
-                    warningText += "All fields are required"; 
+                    warningText += "尚有未完成欄位"; 
                 } else {
                     warningText += "註冊失敗，請重試"; // "Registration failed, please try again"
                 }
