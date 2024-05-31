@@ -340,7 +340,7 @@ function createBase64 (n) {
 		  mode: "cors",
 		  cache: "default",
 		};
-		var allImg = ["https://upcdn.io/kW15c5s/raw/bookpage/000007-page0.png", "https://upcdn.io/kW15c5s/raw/bookpage/transparent.png"]; //shareURL(userdata, book_id, pageNow)
+		var allImg = ["https://upcdn.io/kW15c5s/raw/bookpage/000007-page0.png", "https://upcdn.io/kW15c5s/raw/bookpage/transparent.png"]; //shareURL(userdata, book_id, page)
 		
 		for (var i=0; i<2;i++) {
 			const myRequest = new Request(allImg[i], myInit);
