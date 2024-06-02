@@ -1,11 +1,17 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const bookSchema = new mongoose.Schema({
-    title: {
+var Book = new Schema({
+    bookID: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    bookName: {
         type: String,
         required: true
     },
-    theme:{
+    category: {
         type: String,
         required: true
     },
@@ -13,17 +19,15 @@ const bookSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    image: {
+    coverURL: {
         type: String,
         required: true
     },
-    bookmark: {
+    state: {
         type: String,
-        default: 'bookmark-off.png'
+        required: true,
+        enum: ['choice', 'reward', 'no'] // assuming 'no' means not selected or not in any special state
     }
 });
 
-const Book = mongoose.model('Book', bookSchema);
-
-module.exports = Book;
-
+module.exports = mongoose.model('book', Book);
