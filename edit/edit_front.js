@@ -297,7 +297,7 @@ $("#shareBtn").click(function () {
 		$("#share-screen-container").remove();
 	});
 	$("#downloadBtn").click(function () {
-		if ($("#opt").val() == "0") {
+		if ($("*[name= 'opt']").val() == "0") {
 			for (var j=0; j<totalPage; j++) {
 				const link = document.createElement('a');
 				link.download = book_nameText + "_page" + (j + 1) + ".jpeg";
