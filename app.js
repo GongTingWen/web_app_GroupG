@@ -7,6 +7,10 @@ const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const User = require("./model/User"); // Ensure this path is correct
+const Book = require("./model/book");
+const Page = require("./model/Page");
+const Category = require("./model/category");
+const Author = require("./model/author");
 
 mongoose.connect("mongodb+srv://admin:ls020816@cluster0.cc2dcjm.mongodb.net/Cluster0", { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log("MongoDB connected"))
@@ -174,15 +178,46 @@ app.post('/update', async (req, res) => {
     }
 });
 
-// mybook
-app.post('/mybook', async (req, res) => {
+// homepage
+app.post('/homepage', async (req, res) => {
     // Check if the user is authenticated by verifying the session
     if (!req.session.user) {
         return res.status(400).json({ error: "Missing credentials" });
     }
 
     const username = req.session.user.username;
-    return res.json({ username }); // Return the username in the response
+    // return res.json({ username }); // Return the username in the response
+    const userEmail = req.session.user.email;
+
+    try {
+        const bookLists = await getBookLists(userEmail);
+        if (bookLists) {
+            return res.json(bookLists);
+        } else {
+            return res.status(500).json({ error: "Failed to retrieve book lists" });
+        }
+    } catch (error) {
+        console.error('Error in /homepage route:', error);
+        return res.status(500).json({ error: "Internal server error" });
+    }
+    
+});
+
+app.post('/random-books', async (req, res) => {
+    try {
+        const selectedBooks = await Book.aggregate([{ $sample: { size: 5 } }]);
+        const recommendedBooks = await Book.aggregate([{ $sample: { size: 5 } }]);
+        const unfinishedBooks = await Book.aggregate([{ $sample: { size: 2 } }]);
+
+        res.json({
+            selectedBooks,
+            recommendedBooks,
+            unfinishedBooks
+        });
+    } catch (error) {
+        console.error('Error fetching random books:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
 });
 /*
 // Logout route

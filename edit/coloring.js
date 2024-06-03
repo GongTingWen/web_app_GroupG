@@ -144,7 +144,8 @@ function refresh() {
 		  mode: "cors",
 		  cache: "default",
 		};
-		var allImg = ["https://upcdn.io/kW15c5s/raw/bookpage/000007-page0.png", "https://upcdn.io/kW15c5s/raw/bookpage/transparent.png", "https://upcdn.io/kW15c5s/raw/bookpage/transparent.png", "https://upcdn.io/kW15c5s/raw/bookpage/transparent.png", "https://upcdn.io/kW15c5s/raw/bookpage/white.png"]; //imgURL(userdata, book_id, pageNow)
+		var frameURL = getFrameURL(book_id);
+		var allImg = [frameURL, "https://upcdn.io/kW15c5s/raw/bookpage/transparent.png", "https://upcdn.io/kW15c5s/raw/bookpage/transparent.png", "https://upcdn.io/kW15c5s/raw/bookpage/transparent.png", "https://upcdn.io/kW15c5s/raw/bookpage/white.png"]; //imgURL(userdata, book_id, pageNow)
 		
 		for (var i=0; i<5;i++) {
 			const myRequest = new Request(allImg[i], myInit);
@@ -450,4 +451,100 @@ function rsMode() {
 		})(j);
 	}
 	ctxSH.putImageData(imgDataDF, 0, 0);
+}
+function getFrameURL(book_id) {
+    var frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000001-page0.png";
+    switch (book_id) {
+        case "000001":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000001-page0.png";
+            break;
+        case "000002":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000002-page0.png";
+            break;
+        case "000003":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000003-page0.png";
+            break;
+        case "000004":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000004-page0.png";
+            break;
+        case "000005":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000005-page0.png";
+            break;
+        case "000006":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000006-page0.png";
+            break;
+        case "000007":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000007-page0.png";
+            break;
+        case "000008":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000008-page0.png";
+            break;
+        case "000009":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000009-page0.png";
+            break;
+        case "000010":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000010-page0.png";
+            break;
+        case "000011":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000011-page0.png";
+            break;
+        case "000012":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000012-page0.png";
+            break;
+        case "000013":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000013-page0.png";
+            break;
+        case "000014":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000014-page0.png";
+            break;
+        case "000015":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000015-page0.png";
+            break;
+        case "000016":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000016-page0.png";
+            break;
+        case "000017":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000017-page0.png";
+            break;
+        case "000018":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000018-page0.png";
+            break;
+        case "000020":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000020-page0.png";
+            break;
+        case "000021":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000021-page0.png";
+            break;
+        case "000022":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000022-page0.png";
+            break;
+        case "000023":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000023-page0.png";
+            break;
+        case "000024":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000024-page0.png";
+            break;
+        case "000025":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000025-page0.png";
+            break;
+        case "000026":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000026-page0.png";
+            break;
+        case "000027":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000027-page0.png";
+            break;
+        case "000028":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000028-page0.png";
+            break;
+        case "000029":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000029-page0.png";
+            break;
+        case "000030":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000030-page0.png";
+            break;
+        default:
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000030-page0.png";
+            break;
+    }
+    return frameURL;
 }

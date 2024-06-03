@@ -52,18 +52,24 @@ function menu1 () {
 	$("#search input").attr("placeholder", "在所有繪本中搜尋"); 
 	$("#search").css("display", "flex");
 	$("#main").css("margin-top", "25vh"); 
-	var books =  [[["000007", "盲人「看」顏色", "圖：龔郁雯/文 ：龔郁婷", "../bookpage/000007.png", "bookmark-off.png"], 
-							["000027", "如果顏色是個人", "圖/文：陳薇安", "../bookpage/000027.png", "bookmark-off.png"],
-							["000015", "石頭的輪迴", "圖：龔郁雯/文 ：陳薇安", "../bookpage/000015.png", "bookmark-off.png"],
-							["000021", "想嘗一口嗎？", "圖/文：龔郁婷", "../bookpage/000021.png", "bookmark-off.png"],
-							["000008", "What color is your hat?", "圖/文：陳薇安", "../bookpage/000008.png", "bookmark-off.png"]], 
-						   [["000024", "白色山藥不見了", "圖：龔郁婷/文：陳薇安", "../bookpage/000024.png", "bookmark-off.png"], 
-							["000021", "想嘗一口嗎？", "圖/文：龔郁婷", "../bookpage/000021.png", "bookmark-off.png"],
-							["000022", "百變甜心", "圖：龔郁婷/文：龔郁雯", "../bookpage/000022.png", "bookmark-off.png"],
-							["000023", "Bon Appétit", "圖/文：陳薇安", "../bookpage/000023.png", "bookmark-off.png"],
-							["000025", "福爾摩沙食物圖鑑", "圖/文：陳薇安", "../bookpage/000025.png", "bookmark-off.png"]], 
-						   [["000015", "石頭的輪迴", "圖：龔郁雯/文 ：陳薇安", "../bookpage/000015.png", "bookmark-off.png"], 
-							["000026", "米米愛蛋糕", "圖：龔郁雯/文：龔郁婷", "../bookpage/000026.png", "bookmark-off.png"]]];//contentFunc(userdata);
+	//todo list for contentFunc(userdata);
+	// todo : get random 5 books from database Book for 本月精選
+	// todo : get random 5 books from database Book for 為您推薦
+	// todo : get random 2 books from database Book for 繼續完成
+	// get randomly from the database and make it as list below so it can be printed in the frontend 
+	var books =  [[["000007", "盲人「看」顏色", "圖：龔郁雯/文 ：龔郁婷", "https://upcdn.io/kW15c5s/raw/bookcover/000001.png", "bookmark-off.png"], 
+							["000027", "如果顏色是個人", "圖/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000027.png", "bookmark-off.png"],
+							["000015", "石頭的輪迴", "圖：龔郁雯/文 ：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000015.png", "bookmark-off.png"],
+							["000021", "想嘗一口嗎？", "圖/文：龔郁婷", "https://upcdn.io/kW15c5s/raw/bookcover/000021.png", "bookmark-off.png"],
+							["000008", "What color is your hat?", "圖/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000008.png", "bookmark-off.png"]], 
+						   [["000024", "白色山藥不見了", "圖：龔郁婷/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000024.png", "bookmark-off.png"], 
+							["000021", "想嘗一口嗎？", "圖/文：龔郁婷", "https://upcdn.io/kW15c5s/raw/bookcover/000021.png", "bookmark-off.png"],
+							["000022", "百變甜心", "圖：龔郁婷/文：龔郁雯", "https://upcdn.io/kW15c5s/raw/bookcover/000022.png", "bookmark-off.png"],
+							["000023", "Bon Appétit", "圖/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000023.png", "bookmark-off.png"],
+							["000025", "福爾摩沙食物圖鑑", "圖/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000025.png", "bookmark-off.png"]], 
+						   [["000015", "石頭的輪迴", "圖：龔郁雯/文 ：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000015.png", "bookmark-off.png"], 
+							["000026", "米米愛蛋糕", "圖：龔郁雯/文：龔郁婷", "https://upcdn.io/kW15c5s/raw/bookcover/000026.png", "bookmark-off.png"]]];
+							//contentFunc(userdata);
 	content = books;
 	if (userdata === null) {
 		isLogin = 0;
@@ -73,13 +79,24 @@ function menu1 () {
 	if (isLogin == 0) {
 		user.innerHTML = "<button id='signupBtn'>註冊<span></span><span></span><span></span><span></span></button><button id='loginBtn'>登入<span></span><span></span><span></span><span></span></button>";
 	} else if (isLogin == 1) {
-		var userName = "史迪奇";//getName(userdata);
-		var photo = "book328553.png";//getPhoto(userdata);
-		user.innerHTML = "<div id='profile'><div></div></div><div id='profileName'></div><button id='signoutBtn'>登出<span></span><span></span><span></span><span></span></button>";
-		var profile = document.getElementById("profile").getElementsByTagName("div")[0];
-		var profileName = document.getElementById("profileName");
-		profile.style.backgroundImage = "url('"+ photo + "')";
-		profileName.innerHTML = userName;
+		fetch('/homepage', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+		.then(response => response.json())
+		.then(data => {
+			var userName = data.username; // Retrieve the username from the response
+			// console.log(userName); // Log or use the username as needed
+			// var userName = "史迪奇";//getName();
+			var photo = "book328553.png";//getPhoto();
+			user.innerHTML = "<div id='profile'><div></div></div><div id='profileName'></div><button id='signoutBtn'>登出<span></span><span></span><span></span><span></span></button>";
+			var profile = document.getElementById("profile").getElementsByTagName("div")[0];
+			var profileName = document.getElementById("profileName");
+			profile.style.backgroundImage = "url('"+ photo + "')";
+			profileName.innerHTML = userName;
+		})
 	}
 	var section_name = ["本月精選", "為您推薦", "繼續完成"];
 	var main = document.getElementById("main");
@@ -114,6 +131,83 @@ function menu1 () {
 	var adPic = "../ad/0001.jpg";//adFunc();
 	$(".section-ad").css("background-image", "url(" + adPic + ")");
 }
+/*
+function menu1() {
+    whichPage = 0;
+    $("#search input").attr("placeholder", "在所有繪本中搜尋");
+    $("#search").css("display", "flex");
+    $("#main").css("margin-top", "25vh");
+
+    // Check if the user is authenticated
+    if (userdata === null) {
+        isLogin = 0;
+    } else {
+        isLogin = 1;
+    }
+
+    if (isLogin == 0) {
+        user.innerHTML = "<button id='signupBtn'>註冊<span></span><span></span><span></span><span></span></button><button id='loginBtn'>登入<span></span><span></span><span></span><span></span></button>";
+    } else if (isLogin == 1) {
+        var userName = "史迪奇"; // getName(userdata);
+        var photo = "book328553.png"; // getPhoto(userdata);
+        user.innerHTML = "<div id='profile'><div></div></div><div id='profileName'></div><button id='signoutBtn'>登出<span></span><span></span><span></span><span></span></button>";
+        var profile = document.getElementById("profile").getElementsByTagName("div")[0];
+        var profileName = document.getElementById("profileName");
+        profile.style.backgroundImage = "url('" + photo + "')";
+        profileName.innerHTML = userName;
+    }
+
+    var section_name = ["本月精選", "為您推薦", "繼續完成"];
+    var main = document.getElementById("main");
+    main.innerHTML = "";
+
+    // Fetch random books from the backend
+    fetch('/random-books')
+        .then(response => response.json())
+        .then(data => {
+            var books = [
+                data.selectedBooks.map(book => [book.bookID, book.bookName, book.author, book.coverURL, "bookmark-off.png"]),
+                data.recommendedBooks.map(book => [book.bookID, book.bookName, book.author, book.coverURL, "bookmark-off.png"]),
+                data.unfinishedBooks.map(book => [book.bookID, book.bookName, book.author, book.coverURL, "bookmark-off.png"])
+            ];
+
+            content = books;
+
+            for (var i = 0; i < 3; i++) {
+                if (content[i].length != 0) {
+                    main.innerHTML += "<div class='section'>" +
+                        "<div class='section-name'>" + section_name[i] + "</div>" +
+                        "<div class='bookshelf'></div>" +
+                        "</div>";
+                    var bookshelf = document.getElementsByClassName("bookshelf")[i];
+                    for (var j = 0; j < content[i].length; j++) {
+                        bookshelf.innerHTML += "<div id='" + i.toString() + content[i][j][0] + "' class='book'>" +
+                            "<div class='cover'></div>" +
+                            "<div id='" + i.toString() + j.toString() + "' class='mask'>" +
+                            "<div class='bookmark'></div>" +
+                            "<div class='preview'></div>" +
+                            "<div class='edit'></div>" +
+                            "</div>" +
+                            "<div class='book-name'>" + content[i][j][1] + "</div>" +
+                            "<div class='author-name'>" + content[i][j][2] + "</div>" +
+                            "</div>";
+                        var cover = document.getElementById(i.toString() + content[i][j][0]).getElementsByClassName("cover")[0];
+                        var bookmark = document.getElementById(i.toString() + content[i][j][0]).getElementsByClassName("bookmark")[0];
+                        cover.style.backgroundImage = "url(" + content[i][j][3] + ")";
+                        bookmark.style.backgroundImage = "url(" + content[i][j][4] + ")";
+                    }
+                }
+            }
+
+            main.innerHTML += "<div class='section'><div class='section-ad'></div></div><div class='section'><div class='section-last'>© Meraki</div></div>";
+            var adPic = "../ad/0001.jpg"; // adFunc();
+            $(".section-ad").css("background-image", "url(" + adPic + ")");
+        })
+        .catch(error => {
+            console.error('Error fetching random books:', error);
+        });
+}
+*/
 
 $(".bookmark").mouseenter(function (){
 	$(this).css("background-image", "url('bookmark-on.png')");
@@ -190,11 +284,16 @@ $("#theme").mouseenter(function (){
 		$("#main").css("margin-top", "25vh"); 
 		var optionText = $(this).text();
 		var optionType = $(this).attr("class");
-		var searchBook = [["000014", "我所知道的家園", "圖/文：龔郁婷", "../bookpage/000014.png", "bookmark-on.png"], 
-						  ["000015", "石頭的輪迴", "圖：龔郁雯/文 ：陳薇安", "../bookpage/000015.png", "bookmark-off.png"],
-						  ["000016", "Happy Ever After", "圖：龔郁婷/文：陳薇安", "../bookpage/000016.png", "bookmark-off.png"],
-						  ["000017", "笑一個", "圖/文：龔郁婷", "../bookpage/000017.png", "bookmark-off.png"],
-						  ["000018", "藍色小精靈", "圖：龔郁雯/文：龔郁婷", "../bookpage/000018.png", "bookmark-off.png"]];//categoryBookFunc(optionText, optionType);
+		var searchBook = [["000007", "盲人「看」顏色", "圖：龔郁雯/文 ：龔郁婷", "https://upcdn.io/kW15c5s/raw/bookcover/000001.png", "bookmark-off.png"], 
+		["000027", "如果顏色是個人", "圖/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000027.png", "bookmark-off.png"],
+		["000015", "石頭的輪迴", "圖：龔郁雯/文 ：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000015.png", "bookmark-off.png"],
+		["000021", "想嘗一口嗎？", "圖/文：龔郁婷", "https://upcdn.io/kW15c5s/raw/bookcover/000021.png", "bookmark-off.png"],
+		["000008", "What color is your hat?", "圖/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000008.png", "bookmark-off.png"], 
+	   ["000024", "白色山藥不見了", "圖：龔郁婷/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000024.png", "bookmark-off.png"], 
+		["000022", "百變甜心", "圖：龔郁婷/文：龔郁雯", "https://upcdn.io/kW15c5s/raw/bookcover/000022.png", "bookmark-off.png"],
+		["000023", "Bon Appétit", "圖/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000023.png", "bookmark-off.png"],
+		["000025", "福爾摩沙食物圖鑑", "圖/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000025.png", "bookmark-off.png"], 
+		["000026", "米米愛蛋糕", "圖：龔郁雯/文：龔郁婷", "https://upcdn.io/kW15c5s/raw/bookcover/000026.png", "bookmark-off.png"]];//categoryBookFunc(optionText, optionType);
 		var main = document.getElementById("main");
 		main.innerHTML = "";
 		if (searchBook.length != 0) {
@@ -309,21 +408,16 @@ $("#author").mouseenter(function (){
 		$("#main").css("margin-top", "25vh"); 
 		var optionText = $(this).text();
 		var optionType = $(this).attr("class");
-		var searchBook = [["000002", "我已經長大了", "圖/文：龔郁雯", "../bookpage/000002.png", "bookmark-off.png"], 
-						  ["000005", "佳人素描", "圖：龔郁婷/文：龔郁雯", "../bookpage/000005.png", "bookmark-off.png"],
-						  ["000006", "誰有綠眼睛？", "圖/文：龔郁雯", "../bookpage/000006.png", "bookmark-off.png"],
-						  ["000007", "盲人「看」顏色", "圖：龔郁雯/文 ：龔郁婷", "../bookpage/000007.png", "bookmark-off.png"],
-						  ["000011", "雨中燈下", "圖：龔郁雯/文 ：龔郁婷", "../bookpage/000011.png", "bookmark-off.png"],
-						  ["000012", "愛穿紫色衣服的皇帝", "圖/文：龔郁雯", "../bookpage/000012.png", "bookmark-off.png"],
-						  ["000013", "西湖主", "圖：龔郁雯/文 ：龔郁婷", "../bookpage/000013.png", "bookmark-off.png"],
-						  ["000015", "石頭的輪迴", "圖：龔郁雯/文 ：陳薇安", "../bookpage/000015.png", "bookmark-off.png"],
-						  ["000018", "藍色小精靈", "圖：龔郁雯/文：龔郁婷", "../bookpage/000018.png", "bookmark-off.png"],
-						  ["000020", "遨遊色碼宇宙", "圖/文：龔郁雯", "../bookpage/000020.png", "bookmark-off.png"],
-						  ["000022", "百變甜心", "圖：龔郁婷/文：龔郁雯", "../bookpage/000022.png", "bookmark-off.png"],
-						  ["000026", "米米愛蛋糕", "圖：龔郁雯/文：龔郁婷", "../bookpage/000026.png", "bookmark-off.png"],
-						  ["000028", "換季的信息", "圖：龔郁婷/文：龔郁雯", "../bookpage/000028.png", "bookmark-off.png"],
-						  ["000030", "寵物國的世界觀", "圖/文：龔郁雯", "../bookpage/000030.png", "bookmark-off.png"]];//categoryBookFunc(optionText, optionType);
-		var main = document.getElementById("main");
+		var searchBook = [["000007", "盲人「看」顏色", "圖：龔郁雯/文 ：龔郁婷", "https://upcdn.io/kW15c5s/raw/bookcover/000001.png", "bookmark-off.png"], 
+		["000027", "如果顏色是個人", "圖/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000027.png", "bookmark-off.png"],
+		["000015", "石頭的輪迴", "圖：龔郁雯/文 ：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000015.png", "bookmark-off.png"],
+		["000021", "想嘗一口嗎？", "圖/文：龔郁婷", "https://upcdn.io/kW15c5s/raw/bookcover/000021.png", "bookmark-off.png"],
+		["000008", "What color is your hat?", "圖/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000008.png", "bookmark-off.png"], 
+	   ["000024", "白色山藥不見了", "圖：龔郁婷/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000024.png", "bookmark-off.png"], 
+		["000022", "百變甜心", "圖：龔郁婷/文：龔郁雯", "https://upcdn.io/kW15c5s/raw/bookcover/000022.png", "bookmark-off.png"],
+		["000023", "Bon Appétit", "圖/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000023.png", "bookmark-off.png"],
+		["000025", "福爾摩沙食物圖鑑", "圖/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000025.png", "bookmark-off.png"], 
+		["000026", "米米愛蛋糕", "圖：龔郁雯/文：龔郁婷", "https://upcdn.io/kW15c5s/raw/bookcover/000026.png", "bookmark-off.png"]];
 		main.innerHTML = "";
 		if (searchBook.length != 0) {
 			main.innerHTML +=   "<div class='section'>" +
@@ -472,9 +566,18 @@ $(".edit").click(function () {
 
 $("#reward").click(function () {
 	if (isLogin == 1) {
-		var rewardBook = [["000009", "天長地久的約定", "圖/文：龔郁婷", "../bookpage/000009.png", "bookmark-on.png"], 
-						  ["000010", "容易受人影響的白絲", "圖/文：龔郁婷", "../bookpage/000010.png", "bookmark-off.png"],
-						  ["000029", "你看不見我", "圖/文：龔郁婷", "../bookpage/000029.png", "bookmark-off.png"]];//getRewardFunc(userdata);
+		var rewardBook = [["000007", "盲人「看」顏色", "圖：龔郁雯/文 ：龔郁婷", "https://upcdn.io/kW15c5s/raw/bookcover/000001.png", "bookmark-off.png"], 
+		["000027", "如果顏色是個人", "圖/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000027.png", "bookmark-off.png"],
+		["000015", "石頭的輪迴", "圖：龔郁雯/文 ：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000015.png", "bookmark-off.png"],
+		["000021", "想嘗一口嗎？", "圖/文：龔郁婷", "https://upcdn.io/kW15c5s/raw/bookcover/000021.png", "bookmark-off.png"],
+		["000008", "What color is your hat?", "圖/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000008.png", "bookmark-off.png"], 
+	   ["000024", "白色山藥不見了", "圖：龔郁婷/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000024.png", "bookmark-off.png"], 
+		["000021", "想嘗一口嗎？", "圖/文：龔郁婷", "https://upcdn.io/kW15c5s/raw/bookcover/000021.png", "bookmark-off.png"],
+		["000022", "百變甜心", "圖：龔郁婷/文：龔郁雯", "https://upcdn.io/kW15c5s/raw/bookcover/000022.png", "bookmark-off.png"],
+		["000023", "Bon Appétit", "圖/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000023.png", "bookmark-off.png"],
+		["000025", "福爾摩沙食物圖鑑", "圖/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000025.png", "bookmark-off.png"], 
+	   ["000015", "石頭的輪迴", "圖：龔郁雯/文 ：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000015.png", "bookmark-off.png"], 
+		["000026", "米米愛蛋糕", "圖：龔郁雯/文：龔郁婷", "https://upcdn.io/kW15c5s/raw/bookcover/000026.png", "bookmark-off.png"]];//getRewardFunc(userdata);
 		$("body").append("<div id='reward-screen-container'><div id='reward-screen'>已解鎖繪本<div id='bookshelf-container'><div class='bookshelf'></div></div><button id='close'>×</buttton></div></div>");
 		$("#reward-screen .bookshelf").html("");
 		for (var j=0; j<rewardBook.length; j++) {
@@ -571,16 +674,27 @@ $("#search input").keypress(function (event) {
 		var key_word = $("#search input").val().trim();
 		if (key_word != "") {
 			if (whichPage == 0) {
-				var searchBook = [["000003", "BZ 鎮的雙色湖", "圖/文：龔郁婷", "../bookpage/000003.png", "bookmark-on.png"], 
-								 ["000012", "愛穿紫色衣服的皇帝", "圖/文：龔郁雯", "../bookpage/000012.png", "bookmark-on.png"], 
-								 ["000014", "我所知道的家園", "圖/文：龔郁婷", "../bookpage/000014.png", "bookmark-on.png"], 
-								 ["000015", "石頭的輪迴", "圖：龔郁雯/文 ：陳薇安", "../bookpage/000015.png", "bookmark-on.png"],  
-								 ["000028", "換季的信息", "圖：龔郁婷/文：龔郁雯", "../bookpage/000028.png", "bookmark-on.png"], 
-								 ["000030", "寵物國的世界觀", "圖/文：龔郁雯", "../bookpage/000030.png", "bookmark-on.png"]];//searchBookFunc(key_word);	
+				var searchBook = [["000007", "盲人「看」顏色", "圖：龔郁雯/文 ：龔郁婷", "https://upcdn.io/kW15c5s/raw/bookcover/000001.png", "bookmark-off.png"], 
+				["000027", "如果顏色是個人", "圖/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000027.png", "bookmark-off.png"],
+				["000015", "石頭的輪迴", "圖：龔郁雯/文 ：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000015.png", "bookmark-off.png"],
+				["000021", "想嘗一口嗎？", "圖/文：龔郁婷", "https://upcdn.io/kW15c5s/raw/bookcover/000021.png", "bookmark-off.png"],
+				["000008", "What color is your hat?", "圖/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000008.png", "bookmark-off.png"], 
+			   ["000024", "白色山藥不見了", "圖：龔郁婷/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000024.png", "bookmark-off.png"], 
+				["000022", "百變甜心", "圖：龔郁婷/文：龔郁雯", "https://upcdn.io/kW15c5s/raw/bookcover/000022.png", "bookmark-off.png"],
+				["000023", "Bon Appétit", "圖/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000023.png", "bookmark-off.png"],
+				["000025", "福爾摩沙食物圖鑑", "圖/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000025.png", "bookmark-off.png"], 
+				["000026", "米米愛蛋糕", "圖：龔郁雯/文：龔郁婷", "https://upcdn.io/kW15c5s/raw/bookcover/000026.png", "bookmark-off.png"]];//searchBookFunc(key_word);	
 			} else if (whichPage == 1) {
-				var searchBook = [["000003", "BZ 鎮的雙色湖", "圖/文：龔郁婷", "../bookpage/000003.png", "bookmark-on.png"], 
-								  ["000015", "石頭的輪迴", "圖：龔郁雯/文 ：陳薇安", "../bookpage/000015.png", "bookmark-on.png"],  
-								  ["000030", "寵物國的世界觀", "圖/文：龔郁雯", "../bookpage/000030.png", "bookmark-on.png"]];//searchInMyBookFunc(userdata, key_word);	
+				var searchBook = [["000007", "盲人「看」顏色", "圖：龔郁雯/文 ：龔郁婷", "https://upcdn.io/kW15c5s/raw/bookcover/000001.png", "bookmark-off.png"], 
+				["000027", "如果顏色是個人", "圖/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000027.png", "bookmark-off.png"],
+				["000015", "石頭的輪迴", "圖：龔郁雯/文 ：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000015.png", "bookmark-off.png"],
+				["000021", "想嘗一口嗎？", "圖/文：龔郁婷", "https://upcdn.io/kW15c5s/raw/bookcover/000021.png", "bookmark-off.png"],
+				["000008", "What color is your hat?", "圖/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000008.png", "bookmark-off.png"], 
+			   ["000024", "白色山藥不見了", "圖：龔郁婷/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000024.png", "bookmark-off.png"], 
+				["000022", "百變甜心", "圖：龔郁婷/文：龔郁雯", "https://upcdn.io/kW15c5s/raw/bookcover/000022.png", "bookmark-off.png"],
+				["000023", "Bon Appétit", "圖/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000023.png", "bookmark-off.png"],
+				["000025", "福爾摩沙食物圖鑑", "圖/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000025.png", "bookmark-off.png"], 
+				["000026", "米米愛蛋糕", "圖：龔郁雯/文：龔郁婷", "https://upcdn.io/kW15c5s/raw/bookcover/000026.png", "bookmark-off.png"]];//searchInMyBookFunc(userdata, key_word);	
 			} else {
 				var searchBook = [];
 			}
@@ -698,9 +812,18 @@ $("#menu2").click(function () {
 		$("#search input").attr("placeholder", "在我的繪本中搜尋");
 		$("#search").css("display", "flex");
 		$("#main").css("margin-top", "25vh"); 
-		var searchBook = [[["000015", "石頭的輪迴", "圖：龔郁雯/文 ：陳薇安", "../bookpage/000015.png", "bookmark-off.png"], 
-						   ["000026", "米米愛蛋糕", "圖：龔郁雯/文：龔郁婷", "../bookpage/000026.png", "bookmark-off.png"]],
-						  []];//myBookFunc(userdata);
+		var searchBook = [[["000007", "盲人「看」顏色", "圖：龔郁雯/文 ：龔郁婷", "https://upcdn.io/kW15c5s/raw/bookcover/000001.png", "bookmark-off.png"], 
+		["000027", "如果顏色是個人", "圖/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000027.png", "bookmark-off.png"],
+		["000015", "石頭的輪迴", "圖：龔郁雯/文 ：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000015.png", "bookmark-off.png"],
+		["000021", "想嘗一口嗎？", "圖/文：龔郁婷", "https://upcdn.io/kW15c5s/raw/bookcover/000021.png", "bookmark-off.png"],
+		["000008", "What color is your hat?", "圖/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000008.png", "bookmark-off.png"]], 
+	   [["000024", "白色山藥不見了", "圖：龔郁婷/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000024.png", "bookmark-off.png"], 
+		["000021", "想嘗一口嗎？", "圖/文：龔郁婷", "https://upcdn.io/kW15c5s/raw/bookcover/000021.png", "bookmark-off.png"],
+		["000022", "百變甜心", "圖：龔郁婷/文：龔郁雯", "https://upcdn.io/kW15c5s/raw/bookcover/000022.png", "bookmark-off.png"],
+		["000023", "Bon Appétit", "圖/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000023.png", "bookmark-off.png"],
+		["000025", "福爾摩沙食物圖鑑", "圖/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000025.png", "bookmark-off.png"]], 
+	   [["000015", "石頭的輪迴", "圖：龔郁雯/文 ：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000015.png", "bookmark-off.png"], 
+		["000026", "米米愛蛋糕", "圖：龔郁雯/文：龔郁婷", "https://upcdn.io/kW15c5s/raw/bookcover/000026.png", "bookmark-off.png"]]];//myBookFunc(userdata);
 		var section_name = ["繼續完成", "已加書籤"];
 		var main = document.getElementById("main");
 		main.innerHTML = "";
@@ -823,12 +946,19 @@ $("#menu2").click(function () {
 });
 
 $("#menu3").click(function () {
-	if (isLogin == 1) {
-		whichPage = 2;
-		$("#search").css("display", "none");
-		$("#main").css("margin-top", "0vh"); 
-		var userName = "史迪奇";//getName(userdata);
-		var photo = "book328553.png";//getPhoto(userdata);
+	whichPage = 2;
+	$("#search").css("display", "none");
+	$("#main").css("margin-top", "0vh"); 
+	fetch('/homepage', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	})
+	.then(response => response.json())
+	.then(data => {
+		var userName = data.username; 
+		//var userName = "史迪奇";//getName(userdata);
 		var totalDay = 10; //getTotalDay(userdata);
 		var contiDay = 8; //getContiDay(userdata);
 		var unlock = 2; //getUnlock(userdata);
@@ -844,36 +974,48 @@ $("#menu3").click(function () {
 							"</div>" + 
 							"<div class='section'><div class='section-last'>© Meraki</div></div>";
 		$("#user-name input").css("display", "none");
-	} else {
-		window.location.href = "../login/login.html";
-	}
-	$("#user-photo").css("background-image", "url(" + photo + ")");
-	var rewardList = ["連續登入 7 天：解鎖繪本《天長地久的約定》", "總計登入 10 天：解鎖繪本《容易受人影響的白絲》", "總計登入 20 天：解鎖繪本《你看不見我》"]; //rewardListFunc(userdata);
-	var right_html = "";
-	for (var i=0; i<rewardList.length; i++) {
-		right_html += "<div class='right-col-info'>" + rewardList[rewardList.length-1-i] + "</div>";
-	}
-	$("#right-col-inner").html(right_html);
+	//} else {
+	//	window.location.href = "../login/login.html";
+	//}
+		var photo = "./profile.png";//getPhoto(userdata);
+		$("#user-photo").css("background-image", "url(" + photo + ")");
+		var rewardList = ["連續登入 7 天：解鎖繪本《天長地久的約定》", "總計登入 10 天：解鎖繪本《容易受人影響的白絲》", "總計登入 20 天：解鎖繪本《你看不見我》"]; //rewardListFunc(userdata);
+		var right_html = "";
+		for (var i=0; i<rewardList.length; i++) {
+			right_html += "<div class='right-col-info'>" + rewardList[rewardList.length-1-i] + "</div>";
+		}
+		$("#right-col-inner").html(right_html);
+	})
 	$("#nameBtn").click(function () {
-		var userName = "史迪奇"; //getName(userdata);
-		$("#user-name input").val(userName);
-		$("#user-name input").css("display", "block");
-		$("#name-fix").css("display", "none");
-		$("#nameBtn").css("display", "none");
-		$("#user-name input").keypress(function (event) {
-			if (event.key === "Enter") {
-				var key_word = $("#user-name input").val();
-				if (key_word.trim() != "") {
-					//changeName(userdata, key_word);
-					userName = key_word;
-					$("#name-fix").text(userName);
-					$("#profileName").text(userName);
-					$("#user-name input").css("display", "none");
-					$("#name-fix").css("display", "block");
-					$("#nameBtn").css("display", "block");
-				}
+		//var userName = "史迪奇"; //getName(userdata);
+		fetch('/homepage', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
 			}
-		});
+		})
+		.then(response => response.json())
+		.then(data => {
+			var userName = data.username; // Retrieve the username from the response
+			$("#user-name input").val(userName);
+			$("#user-name input").css("display", "block");
+			$("#name-fix").css("display", "none");
+			$("#nameBtn").css("display", "none");
+			$("#user-name input").keypress(function (event) {
+				if (event.key === "Enter") {
+					var key_word = $("#user-name input").val();
+					if (key_word.trim() != "") {
+						//changeName(userdata, key_word);
+						userName = key_word;
+						$("#name-fix").text(userName);
+						$("#profileName").text(userName);
+						$("#user-name input").css("display", "none");
+						$("#name-fix").css("display", "block");
+						$("#nameBtn").css("display", "block");
+					}
+				}
+			});
+		})
 	});
 	$("#photoBtn input").change(function (event) { 
 		var newPhoto = event.target.files[0];
@@ -911,3 +1053,36 @@ $("#menu3").click(function () {
 		}
 	});
 });
+const getBookLists = async (userEmail) => {
+    try {
+        // Fetch user data based on email
+        const user = await UserModel.findOne({ email: userEmail });
+
+        // If user is not found, return random recommendations
+        if (!user) {
+            const randomBooks = await Book.aggregate([{ $sample: { size: 5 } }]);
+            return {
+                selectedBooks: randomBooks,
+                recommendedBooks: randomBooks,
+                unfinishedBooks: []
+            };
+        }
+
+        // Fetch the book lists for a logged-in user
+        const selectedBooks = await Book.find({ state: 'choice' }).limit(5);
+        const recommendedBooks = await Book.aggregate([{ $sample: { size: 5 } }]);
+        const unfinishedBooks = await Book.find({ state: 'unfinished' });
+
+        return {
+            selectedBooks: selectedBooks,
+            recommendedBooks: recommendedBooks,
+            unfinishedBooks: unfinishedBooks
+        };
+
+    } catch (error) {
+        console.error('Error fetching book lists:', error);
+        return null;
+    }
+};
+
+module.exports.getBookLists = getBookLists;

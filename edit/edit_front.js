@@ -1,7 +1,7 @@
 
 var userdata = window.localStorage.getItem("userdata");
 var book_id = window.localStorage.getItem("bookdata");
-
+// console.log(book_id);
 //ifCreateCondition(userdata, book_id);
 
 var page = 0;
@@ -15,21 +15,64 @@ const uploadManager = new Bytescale.UploadManager({
 	apiKey: "public_kW15c5s5fNhx1V9REiavxdWpKDj1" // This is your API key.
 });
 
+var book_author = "author";
+var book_full_name = "book";
+
+if (book_id == "000007") {
+    book_author = "圖：龔郁雯/文：龔郁婷";
+    book_full_name = "盲人「看」顏色";
+} else if (book_id == "000027") {
+    book_author = "圖/文：陳薇安";
+    book_full_name = "如果顏色是個人";
+} else if (book_id == "000015") {
+    book_author = "圖：龔郁雯/文：陳薇安";
+    book_full_name = "石頭的輪迴";
+} else if (book_id == "000021") {
+    book_author = "圖/文：龔郁婷";
+    book_full_name = "想嘗一口嗎？";
+} else if (book_id == "000008") {
+    book_author = "圖/文：陳薇安";
+    book_full_name = "What color is your hat?";
+} else if (book_id == "000024") {
+    book_author = "圖：龔郁婷/文：陳薇安";
+    book_full_name = "白色山藥不見了";
+} else if (book_id == "000022") {
+    book_author = "圖：龔郁婷/文：龔郁雯";
+    book_full_name = "百變甜心";
+} else if (book_id == "000023") {
+    book_author = "圖/文：陳薇安";
+    book_full_name = "Bon Appétit";
+} else if (book_id == "000025") {
+    book_author = "圖/文：陳薇安";
+    book_full_name = "福爾摩沙食物圖鑑";
+} else if (book_id == "000026") {
+    book_author = "圖：龔郁雯/文：龔郁婷";
+    book_full_name = "米米愛蛋糕";
+}
 var book_name = document.getElementById("book-name");
-var book_nameText = "絲念"; //getBookNameFunc(book_id);
+var book_nameText = book_full_name; //"如果顏色是個人"; //getBookNameFunc(book_id);
 book_name.innerHTML = book_nameText;
 $("title").html($("title").html() + book_nameText);
 
 var author_name = document.getElementById("author-name");
-author_name.innerHTML = "圖/文：龔郁婷"; //getAuthorkNameFunc(book_id);
-
-var userName = "史迪奇";//getName(userdata);
+author_name.innerHTML = book_author; //"圖/文：陳薇安"; //getAuthorkNameFunc(book_id);
+fetch('/homepage', {
+	method: 'POST',
+	headers: {
+		'Content-Type': 'application/json'
+	}
+})
+.then(response => response.json())
+.then(data => {
+	var userName = data.username; 
+	var profileName = document.getElementById("profileName");
+	profile.style.backgroundImage = "url('"+ photo + "')";
+	profileName.innerHTML = userName;
+	//profileName.innerHTML = userName;
+})
 var userId = "000001";//getId(userdata);
 var photo = "book328553.png";//getPhoto(userdata);
 var profile = document.getElementById("profile").getElementsByTagName("div")[0];
-var profileName = document.getElementById("profileName");
-profile.style.backgroundImage = "url('"+ photo + "')";
-profileName.innerHTML = userName;
 
 var leaveBtn = document.getElementById("leaveBtn");
 leaveBtn.addEventListener("click", saveImgLeave);
@@ -270,7 +313,223 @@ $("#shareBtn").click(function () {
 	});
 });
 
+
+
+// Declare book_id globally
+var book_id;
+
+window.onload = function() {
+    // Retrieve book_id from localStorage when the page loads
+    book_id = window.localStorage.getItem("bookdata");
+    console.log("Retrieved book_id:", book_id);
+
+    // Call createBase64 function only after book_id is retrieved
+    createBase64();
+};
+
+function createBase64() {
+    console.log("Using book_id in createBase64:", book_id);
+    var colorSV = [];
+    
+    var canvFR = document.createElement("canvas");
+    var ctxFR = canvFR.getContext("2d");
+    var imgFR = new Image();
+    var imgDataFR = "";
+    var pixelDataFR = "";
+        
+    var canvS = document.createElement("canvas");
+    var ctxS = canvS.getContext("2d");
+    var imgS = new Image();
+    var imgDataS = "";
+    var pixelDataS = "";
+    
+    imgS.onload = function () {
+        canvFR.width = imgFR.width;
+        canvFR.height = imgFR.height;
+        canvFR.style.display = "none";
+        ctxFR.drawImage(imgFR, 0, 0);
+        imgDataFR = ctxFR.getImageData(0, 0, canvFR.width, canvFR.height);
+        pixelDataFR = imgDataFR.data;
+        
+        canvS.width = imgS.width;
+        canvS.height = imgS.height;
+        canvS.style.display = "none";
+        ctxS.drawImage(imgS, 0, 0);
+        imgDataS = ctxS.getImageData(0, 0, canvS.width, canvS.height);
+        pixelDataS = imgDataS.data;
+
+        for (var i = 0; i < pixelDataFR.length; i += 4) {
+            var redFR = pixelDataFR[i];
+            var greenFR = pixelDataFR[i + 1];
+            var blueFR = pixelDataFR[i + 2];
+            var aFR = pixelDataFR[i + 3];
+            
+            var redS = pixelDataS[i];
+            var greenS = pixelDataS[i + 1];
+            var blueS = pixelDataS[i + 2];
+            var aS = pixelDataS[i + 3];
+            
+            if (aFR != 0) {
+                colorSV.push([redFR, greenFR, blueFR, aFR]);
+            } else {
+                colorSV.push([redS, greenS, blueS, aS]);
+            }
+        }
+        for (var j = 0; j < pixelDataFR.length; j += 4) {
+            pixelDataFR[j] = colorSV[j / 4][0];
+            pixelDataFR[j + 1] = colorSV[j / 4][1];
+            pixelDataFR[j + 2] = colorSV[j / 4][2];
+            pixelDataFR[j + 3] = 255;
+        }
+        var canvSV = document.createElement("canvas");
+        var ctxSV = canvSV.getContext("2d");
+        canvSV.width = imgFR.width;
+        canvSV.height = imgFR.height;
+        ctxSV.putImageData(imgDataFR, 0, 0);
+        
+        base64Images.push(canvSV.toDataURL('image/jpeg'));
+    };
+    
+    async function loadImg() {
+        var myHeaders = new Headers();
+        var myInit = {
+            method: "GET",
+            headers: myHeaders,
+            mode: "cors",
+            cache: "default",
+        };
+        
+        console.log("Using book_id in loadImg:", book_id);
+        var frameURL = getFrameURL(book_id);
+        var allImg = ["https://upcdn.io/kW15c5s/raw/bookpage/000005-page0.png", "https://upcdn.io/kW15c5s/raw/bookpage/transparent.png"];
+
+        for (var i = 0; i < 2; i++) {
+            const myRequest = new Request(allImg[i], myInit);
+
+            await fetch(myRequest)
+                .then(function (response) {
+                    return response.blob();
+                })
+                .then(function (myBlob) {
+                    const objectURL = URL.createObjectURL(myBlob);
+                    if (i == 0) {
+                        imgFR.src = objectURL;
+                    } else if (i == 1) {
+                        imgS.src = objectURL;
+                    }
+                });
+        }
+    }
+    
+    loadImg();
+}
+
+function getFrameURL(book_id) {
+    var frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000001-page0.png";
+    switch (book_id) {
+        case "000001":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000001-page0.png";
+            break;
+        case "000002":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000002-page0.png";
+            break;
+        case "000003":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000003-page0.png";
+            break;
+        case "000004":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000004-page0.png";
+            break;
+        case "000005":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000005-page0.png";
+            break;
+        case "000006":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000006-page0.png";
+            break;
+        case "000007":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000007-page0.png";
+            break;
+        case "000008":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000008-page0.png";
+            break;
+        case "000009":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000009-page0.png";
+            break;
+        case "000010":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000010-page0.png";
+            break;
+        case "000011":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000011-page0.png";
+            break;
+        case "000012":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000012-page0.png";
+            break;
+        case "000013":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000013-page0.png";
+            break;
+        case "000014":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000014-page0.png";
+            break;
+        case "000015":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000015-page0.png";
+            break;
+        case "000016":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000016-page0.png";
+            break;
+        case "000017":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000017-page0.png";
+            break;
+        case "000018":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000018-page0.png";
+            break;
+        case "000020":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000020-page0.png";
+            break;
+        case "000021":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000021-page0.png";
+            break;
+        case "000022":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000022-page0.png";
+            break;
+        case "000023":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000023-page0.png";
+            break;
+        case "000024":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000024-page0.png";
+            break;
+        case "000025":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000025-page0.png";
+            break;
+        case "000026":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000026-page0.png";
+            break;
+        case "000027":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000027-page0.png";
+            break;
+        case "000028":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000028-page0.png";
+            break;
+        case "000029":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000029-page0.png";
+            break;
+        case "000030":
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000030-page0.png";
+            break;
+        default:
+            frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000030-page0.png";
+            break;
+    }
+    return frameURL;
+}
+
+
+// Call createBase64 function when needed
+createBase64(someValue);
+
+/*
+var book_id = window.localStorage.getItem("bookdata");
 function createBase64 (n) {
+	
+	console.log("Retrieved book_id:", book_id);
 	var colorSV = [];
 	
 	var canvFR = document.createElement("canvas");
@@ -336,13 +595,78 @@ function createBase64 (n) {
 	
 	async function loadImg () {
 		var myHeaders = new Headers();
+		console.log("Retrieved book_id:", book_id);
 		var myInit = {
 		  method: "GET",
 		  headers: myHeaders,
 		  mode: "cors",
 		  cache: "default",
 		};
-		var allImg = ["https://upcdn.io/kW15c5s/raw/bookpage/000007-page0.png", "https://upcdn.io/kW15c5s/raw/bookpage/transparent.png"]; //shareURL(userdata, book_id, page)
+		var frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000007-page0.png";
+		//var fixURL = "https://upcdn.io/kW15c5s/raw/bookpage/transparent.png";
+		
+		console.log(book_id);
+		if (book_id == "000001") {
+			frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000001-page0.png";
+		} else if (book_id == "000002") {
+			frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000002-page0.png";
+		} else if (book_id == "000003") {
+			frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000003-page0.png";
+		} else if (book_id == "000004") {
+			frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000004-page0.png";
+		} else if (book_id == "000005") {
+			frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000005-page0.png";
+		} else if (book_id == "000006") {
+			frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000006-page0.png";
+		} else if (book_id == "000007") {
+			frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000007-page0.png";
+		} else if (book_id == "000008") {
+			frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000008-page0.png";
+		} else if (book_id == "000009") {
+			frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000009-page0.png";
+		} else if (book_id == "000010") {
+			frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000010-page0.png";
+		} else if (book_id == "000011") {
+			frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000011-page0.png";
+		} else if (book_id == "000012") {
+			frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000012-page0.png";
+		} else if (book_id == "000013") {
+			frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000013-page0.png";
+		} else if (book_id == "000014") {
+			frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000014-page0.png";
+		} else if (book_id == "000015") {
+			frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000015-page0.png";
+		} else if (book_id == "000016") {
+			frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000016-page0.png";
+		} else if (book_id == "000017") {
+			frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000017-page0.png";
+		} else if (book_id == "000018") {
+			frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000018-page0.png";
+		} else if (book_id == "000020") {
+			frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000020-page0.png";
+		} else if (book_id == "000021") {
+			frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000021-page0.png";
+		} else if (book_id == "000022") {
+			frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000022-page0.png";
+		} else if (book_id == "000023") {
+			frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000023-page0.png";
+		} else if (book_id == "000024") {
+			frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000024-page0.png";
+		} else if (book_id == "000025") {
+			frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000025-page0.png";
+		} else if (book_id == "000026") {
+			frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000026-page0.png";
+		} else if (book_id == "000027") {
+			frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000027-page0.png";
+		} else if (book_id == "000028") {
+			frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000028-page0.png";
+		} else if (book_id == "000029") {
+			frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000029-page0.png";
+		} else if (book_id == "000030") {
+			frameURL = "https://upcdn.io/kW15c5s/raw/bookpage/000030-page0.png";
+		}
+
+		var allImg = [frameURL, "https://upcdn.io/kW15c5s/raw/bookpage/transparent.png"]; //shareURL(userdata, book_id, page)
 		
 		for (var i=0; i<2;i++) {
 			const myRequest = new Request(allImg[i], myInit);
@@ -364,3 +688,4 @@ function createBase64 (n) {
     
 	loadImg ();
 }
+*/
