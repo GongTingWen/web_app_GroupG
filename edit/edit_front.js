@@ -236,8 +236,8 @@ $("#shareBtn").click(function () {
 						"<div class='line-it-button icon'></div>" +
 						"<div class='x-share-button icon'></div></fieldset>" +
 						"<div id='link-parent'></div>" + 
-						"<fieldset id='download-container'><legend id='download'>輸出至裝置</legend><label for='opt'><input type='radio' id='opt' name='opt' value='0' checked />全部頁面</label>" + 
-						"<label for='opt'><input type='radio' id='opt' name='opt' value='1'/>當前頁面</label><button id='downloadBtn'>輸出<span></span><span></span><span></span><span></span></button></fieldset><div id='copy-done'>已複製連結</div></div><button id='close'>×</buttton></div></div>");
+						"<fieldset id='download-container'><legend id='download'>輸出至裝置</legend><label for='opt1'><input type='radio' id='opt1' name='opt' value='0' checked />全部頁面</label>" + 
+						"<label for='opt2'><input type='radio' id='opt2' name='opt' value='1'/>當前頁面</label><button id='downloadBtn'>輸出<span></span><span></span><span></span><span></span></button></fieldset><div id='copy-done'>已複製連結</div></div><button id='close'>×</buttton></div></div>");
 	
 	$("#share-screen").css("display", "none");
 	$("#copy-done").css("display", "none");
