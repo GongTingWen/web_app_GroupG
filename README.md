@@ -1,5 +1,5 @@
-# Meraki 繪本著色網站執行/使用指南
-## 如何執行
+# Meraki 繪本著色網站執行指南
+## 執行步驟
 > Step 1: 安裝 node.js
 >   * 免安裝網址 https://nodejs.org/en/download/prebuilt-binaries/current
 > 
