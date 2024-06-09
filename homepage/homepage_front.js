@@ -55,6 +55,7 @@ function menu1 () {
 	//todo list for contentFunc(userdata);
 	// todo : get random 5 books from database Book for 本月精選
 	// todo : get random 5 books from database Book for 為您推薦
+	// todo : get random 5 books from database Book for 最新繪本
 	// todo : get random 2 books from database Book for 繼續完成
 	// get randomly from the database and make it as list below so it can be printed in the frontend 
 	var books =  [[["000007", "盲人「看」顏色", "圖：龔郁雯/文 ：龔郁婷", "https://upcdn.io/kW15c5s/raw/bookcover/000001.png", "bookmark-off.png"], 
@@ -66,7 +67,12 @@ function menu1 () {
 							["000021", "想嘗一口嗎？", "圖/文：龔郁婷", "https://upcdn.io/kW15c5s/raw/bookcover/000021.png", "bookmark-off.png"],
 							["000022", "百變甜心", "圖：龔郁婷/文：龔郁雯", "https://upcdn.io/kW15c5s/raw/bookcover/000022.png", "bookmark-off.png"],
 							["000023", "Bon Appétit", "圖/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000023.png", "bookmark-off.png"],
-							["000025", "福爾摩沙食物圖鑑", "圖/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000025.png", "bookmark-off.png"]], 
+							["000025", "福爾摩沙食物圖鑑", "圖/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000025.png", "bookmark-off.png"]],
+		      				   [["000024", "白色山藥不見了", "圖：龔郁婷/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000024.png", "bookmark-off.png"], 
+							["000021", "想嘗一口嗎？", "圖/文：龔郁婷", "https://upcdn.io/kW15c5s/raw/bookcover/000021.png", "bookmark-off.png"],
+							["000022", "百變甜心", "圖：龔郁婷/文：龔郁雯", "https://upcdn.io/kW15c5s/raw/bookcover/000022.png", "bookmark-off.png"],
+							["000023", "Bon Appétit", "圖/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000023.png", "bookmark-off.png"],
+							["000025", "福爾摩沙食物圖鑑", "圖/文：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000025.png", "bookmark-off.png"]],
 						   [["000015", "石頭的輪迴", "圖：龔郁雯/文 ：陳薇安", "https://upcdn.io/kW15c5s/raw/bookcover/000015.png", "bookmark-off.png"], 
 							["000026", "米米愛蛋糕", "圖：龔郁雯/文：龔郁婷", "https://upcdn.io/kW15c5s/raw/bookcover/000026.png", "bookmark-off.png"]]];
 							//contentFunc(userdata);
@@ -98,10 +104,10 @@ function menu1 () {
 			profileName.innerHTML = userName;
 		})
 	}
-	var section_name = ["本月精選", "為您推薦", "繼續完成"];
+	var section_name = ["本月精選", "為您推薦", "最新繪本", "繼續完成"];
 	var main = document.getElementById("main");
 	main.innerHTML = "";
-	for (var i=0; i<3; i++) {
+	for (var i=0; i<4; i++) {
 		if (content[i].length != 0) {
 			main.innerHTML +=   "<div class='section'>" +
 									"<div class='section-name'>" + section_name[i] + "</div>" +
