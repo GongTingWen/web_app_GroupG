@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="referrer" content="no-referrer">
+	<title>Meraki：</title>
+	<link rel="stylesheet" type="text/css" href="edit.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="https://www.line-website.com/social-plugins/js/thirdparty/loader.min.js" async="async" defer="defer"></script>
+	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v20.0" nonce="DXdaVlZm"></script>
+	<script src="https://platform.twitter.com/widgets.js"></script>
+	<script src="https://js.bytescale.com/sdk/v3"></script>
+</head>
+<body>
+	<div id="head">
+		<div id="logo"></div>
+		<div id="book-info">
+			<div id="book-name"></div>
+			<div id="author-name"></div>
+		</div>
+		<button id="shareBtn">分享<span></span><span></span><span></span><span></span></button>
+		<div id="user">
+			<div id='profile'><div></div></div>
+			<div id='profileName'></div>
+			<button id='leaveBtn'>結束編輯<span></span><span></span><span></span><span></span></button>
+		</div>
+	</div>
+	<div id="main">
+		<div id="tool">
+			<div id="penBtn"><input type="color"><div class="alt">畫筆顏色</div></div>
+			<button id="eraserBtn"><div class="alt">橡皮擦</div></button>
+			<button id="autoBtn"><div class="alt">AI 填色</div></button>
+			<button id="resetBtn"><div class="alt">重新上色</div></button>
+		</div>
+		<div id="edit-field">
+			<button id="leftPage">➔</button>
+			<div id="book">
+				<canvas id="color"></canvas>
+				<div id="frame"></div>
+				<div id="loading"><div id="loading-word">Loading</div></div>
+			</div>
+			<button id="rightPage">➔</button>
+		</div>
+	</div>
+	<div id="warning">請在橫屏狀態下編輯</div>
+	<div id="loadingB"><div>Loading</div></div>
+	<script src="edit_front.js"></script>
+	<script src="coloring.js"></script>
+</body>
+</html>
