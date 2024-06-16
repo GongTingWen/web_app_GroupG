@@ -28,7 +28,7 @@
 >
 > Step 8: 點選匯入，選擇 web_app_GroupG 資料夾中的 meraki.sql 檔案，並按下下方的匯入按鈕
 >
-> Step 9: 資料成功匯入後，打開 cmd，在 node.js 路徑下，執行 node app.js
+> Step 9: 資料成功匯入後打開 cmd，在 node.js 路徑下，執行 node app.js
 >   * 若 app.js 和 node.js 不在同一個資料夾中，須在 app.js 前加上檔案路徑
 >
 > Step 10: 看到終端出現 "Server is running on port http://localhost:3000" 訊息，開啟 "http://localhost:3000"
