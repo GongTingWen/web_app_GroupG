@@ -129,7 +129,7 @@ function saveImgLeft() {
 }
 
 function saveImgRight() {
-	if (page != totalPage) {
+	if (page != (totalPage - 1)) {
 		$("#loadingB").css("display", "flex");
 		var canvSH = document.getElementById("color");
 		var newState = canvSH.toDataURL("image/png");
