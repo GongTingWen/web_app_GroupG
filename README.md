@@ -23,7 +23,7 @@
 > Step 5: 打開步驟一下載的 XAMPP Control Panel，按下 Apache 和 MySQL 右方的 Start
 >   * 網頁執行期間請勿暫停此服務
 >
->     ![image](https://github.com/GongTingWen/web_app_GroupG/assets/124494535/dfc8cb4e-9416-46df-a377-c7c4007ce225)
+>     ![image](https://github.com/GongTingWen/web_app_GroupG/assets/124494535/46dfbf0e-0e36-4232-a89c-086251cd612a)
 >
 > Step 6: 點擊 MySQL 的 Admin 進入 phpMyAdmin 頁面
 >
