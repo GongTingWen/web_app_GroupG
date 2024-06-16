@@ -1,10 +1,10 @@
 # Meraki 繪本著色網站執行指南
 
 ## 重要事項
-> * 可以連上 MySQL 資料庫的時間：每日中午 12:00 至午夜 12:00
 > * Meraki 使用的圖床為試用版，試用期限至 2024/06/27
 > * 網頁上的繪本多為示意，若要體驗填色，請閱讀《絲念》和《How to Color》兩本繪本
 > * 登入獎勵政策為每連續登入三天解鎖一本繪本、每累積登入十天解鎖一本繪本；目前可供獎勵的繪本數為三本
+> * 歡迎使用測試帳號，電子郵件 merakicoloringbook@gmail.com，密碼 123321，此帳號已獲得獎勵繪本
 
 ## 執行步驟
 > Step 1: 安裝 XAMPP
@@ -20,13 +20,13 @@
 >
 > Step 4: 下載 web_app_GroupG 資料夾
 >
-> Step 5：打開 XAMPP Control Panel，按下 Apache 和 MySQL 右方的 Start
+> Step 5: 打開 XAMPP Control Panel，按下 Apache 和 MySQL 右方的 Start
 >
-> Step 6：點擊 MySQL 的 Admin 進入 phpMyAdmin 頁面
+> Step 6: 點擊 MySQL 的 Admin 進入 phpMyAdmin 頁面
 >
-> Step 7：新增資料庫 meraki
+> Step 7: 新增資料庫 meraki
 >
-> Step 8：┬點選匯入，選擇 web_app_GroupG 資料夾中的 meraki.sql 檔案，並按下下方的匯入按鈕
+> Step 8: 點選匯入，選擇 web_app_GroupG 資料夾中的 meraki.sql 檔案，並按下下方的匯入按鈕
 >
 > Step 9: 資料成功匯入後，打開 cmd，在 node.js 路徑下，執行 node app.js
 >   * 若 app.js 和 node.js 不在同一個資料夾中，須在 app.js 前加上檔案路徑
