@@ -20,7 +20,7 @@
 >
 > Step 4: 下載 web_app_GroupG 資料夾
 >
-> Step 5: 打開 XAMPP Control Panel，按下 Apache 和 MySQL 右方的 Start
+> Step 5: 打開 XAMPP Control Panel，按下 Apache 和 MySQL 右方的 Start，網頁執行期間請勿暫停此服務
 >
 > Step 6: 點擊 MySQL 的 Admin 進入 phpMyAdmin 頁面
 >
