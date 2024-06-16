@@ -20,16 +20,25 @@
 >
 > Step 4: 下載 GitHub 上的 web_app_GroupG 資料夾
 >
-> Step 5: 打開步驟一下載的 XAMPP Control Panel，按下 Apache 和 MySQL 右方的 Start，網頁執行期間請勿暫停此服務
+> Step 5: 打開步驟一下載的 XAMPP Control Panel，按下 Apache 和 MySQL 右方的 Start
+>   * 網頁執行期間請勿暫停此服務
+>
+>     ![image](https://github.com/GongTingWen/web_app_GroupG/assets/124494535/dfc8cb4e-9416-46df-a377-c7c4007ce225)
 >
 > Step 6: 點擊 MySQL 的 Admin 進入 phpMyAdmin 頁面
 >
 > Step 7: 新增資料庫 meraki
+>   * 點擊「新增」→ 輸入資料庫名稱「meraki」→ 點擊「建立」
 >
-> Step 8: 點選匯入，選擇 web_app_GroupG 資料夾中的 meraki.sql 檔案，並按下下方的匯入按鈕
+>     ![image](https://github.com/GongTingWen/web_app_GroupG/assets/124494535/aaec06a9-f93b-4b4f-9807-06a2c928c087)
 >
-> Step 9: 資料成功匯入後打開 cmd，在 node.js 路徑下，執行 node app.js
->   * 若 app.js 和 node.js 不在同一個資料夾中，須在 app.js 前加上檔案路徑
+> Step 8: 在 meraki 資料庫中，匯入 web_app_GroupG 資料夾中的 meraki.sql 檔案
+>   * 點擊「匯入」→ 選擇檔案 meraki.sql → 點擊「匯入」（在最下方）
+>
+>     ![image](https://github.com/GongTingWen/web_app_GroupG/assets/124494535/77ed9513-3835-48a2-a375-b010a1abdbfd)
+>
+> Step 9: 資料成功匯入後打開 cmd，在 nodejs 資料夾路徑下，執行 node app.js
+>   * 請將 app.js 和所有資料夾（login、signup、forgetpassword、homepage、edit）放在 nodejs 資料夾中
 >
 > Step 10: 看到終端出現 "Server is running on port http://localhost:3000" 訊息，開啟 "http://localhost:3000"
 >   * 完成
