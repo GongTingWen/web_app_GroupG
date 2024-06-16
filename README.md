@@ -18,9 +18,9 @@
 >
 >     ![image](https://github.com/GongTingWen/web_app_GroupG/assets/124494535/c05f1610-b925-4f7c-9662-0145735b5818)
 >
-> Step 4: 下載 web_app_GroupG 資料夾
+> Step 4: 下載 GitHub 上的 web_app_GroupG 資料夾
 >
-> Step 5: 打開 XAMPP Control Panel，按下 Apache 和 MySQL 右方的 Start，網頁執行期間請勿暫停此服務
+> Step 5: 打開步驟一下載的 XAMPP Control Panel，按下 Apache 和 MySQL 右方的 Start，網頁執行期間請勿暫停此服務
 >
 > Step 6: 點擊 MySQL 的 Admin 進入 phpMyAdmin 頁面
 >
